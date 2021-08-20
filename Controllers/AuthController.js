@@ -8,9 +8,9 @@ const reg_exp_for_email =  /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|
 
 authController.sineUp = async (req, res) => {
   try {
-    const { username, email, phone, password, confirm_password } = req.body;
+    const { username, email, password, confirm_password } = req.body;
 
-    if (!username || !email || !phone || !password || !confirm_password) {
+    if (!username || !email || !password || !confirm_password) {
       return res.status(400).json({ message: 'Not all field have been entered' });
     }
     if (!reg_exp_for_email.test(String(email).toLowerCase())) {
@@ -28,7 +28,6 @@ authController.sineUp = async (req, res) => {
     if (existingUser) {
       return res.status(400).json({ message: 'An account with this email already exists' });
     }
-
     const salt = await bcrypt.genSalt();
     const hashPassword = await bcrypt.hash(password, salt);
 
@@ -39,6 +38,10 @@ authController.sineUp = async (req, res) => {
     });
 
     const saveUser = await newUser.save();
+    console.log(
+      '🚀 ~ file: AuthController.js ~ line 43 ~ authController.sineUp= ~ saveUser',
+      saveUser,
+    );
 
     const token = jwt.sign({ id: saveUser._id }, process.env.JWT_PASSWORD);
     return res.send({
@@ -71,6 +74,7 @@ authController.login = async (req, res) => {
       });
     }
     const user = await User.findOne({ email }, { email: 1, password: 1, username: 1, isAdmin: 1 });
+    console.log('🚀 ~ file: AuthController.js ~ line 79 ~ authController.login= ~ user', user);
     if (!user) {
       return res.status(400).json({ message: 'No account with this email has been registers' });
     }
@@ -84,7 +88,7 @@ authController.login = async (req, res) => {
       token,
       userInfo: {
         id: user._id,
-        name: user.username,
+        username: user.username,
         email: user.email,
         isAdmin: user.isAdmin,
       },

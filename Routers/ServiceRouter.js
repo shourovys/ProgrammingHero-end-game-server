@@ -9,6 +9,6 @@ serviceRouter.post('/add', auth, admin, addService);
 
 serviceRouter.post('/update', auth, admin, updateService);
 
-serviceRouter.get('/services', getServices);
+serviceRouter.get('/get', getServices);
 
 module.exports = serviceRouter;

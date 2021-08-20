@@ -16,13 +16,13 @@ app.use(bodyParser.urlencoded({ limit: '30mb', extended: true }));
 app.use(cors());
 
 // routers
-app.use('/user/auth', authRouter);
+app.use('/auth', authRouter);
 app.use('/services', serviceRouter);
 app.use('/user/order', UserOrderRouter);
 app.use('/order', OrderRouter);
-app.get('/', (req, res) => res.send('welcome to Our App'));
+app.post('/', (req, res) => res.send(req.body));
 
-const CONNECTION_URL = process.env.MONGODB_CONNECTION_URL;
+const CONNECTION_URL = process.env.MONGODB_CONNECTION_URL_PAST;
 const PORT = process.env.PORT || 4000;
 
 mongoose

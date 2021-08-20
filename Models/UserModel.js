@@ -20,11 +20,11 @@ const userSchema = new Schema(
       min: 6,
     },
     isAdmin: {
-      type: String,
+      type: Boolean,
       default: false,
     },
   },
-  { timestamps: true },
+  { timestamps: true }
 );
 
 const User = mongoose.model('User', userSchema);
