@@ -8,9 +8,9 @@ const reg_exp_for_email =  /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|
 
 authController.sineUp = async (req, res) => {
   try {
-    const { username, email, password, confirm_password } = req.body;
+    const { name, email, password, confirm_password } = req.body;
 
-    if (!username || !email || !password || !confirm_password) {
+    if (!name || !email || !password || !confirm_password) {
       return res.status(400).json({ message: 'Not all field have been entered' });
     }
     if (!reg_exp_for_email.test(String(email).toLowerCase())) {
@@ -32,7 +32,7 @@ authController.sineUp = async (req, res) => {
     const hashPassword = await bcrypt.hash(password, salt);
 
     const newUser = new User({
-      username,
+      name,
       email,
       password: hashPassword,
     });
@@ -48,7 +48,7 @@ authController.sineUp = async (req, res) => {
       token,
       userInfo: {
         id: saveUser._id,
-        name: saveUser.username,
+        name: saveUser.name,
         email: saveUser.email,
         isAdmin: saveUser.isAdmin,
       },
@@ -73,7 +73,7 @@ authController.login = async (req, res) => {
         message: 'The password need to be at least 6 characters long.',
       });
     }
-    const user = await User.findOne({ email }, { email: 1, password: 1, username: 1, isAdmin: 1 });
+    const user = await User.findOne({ email }, { email: 1, password: 1, name: 1, isAdmin: 1 });
     console.log('🚀 ~ file: AuthController.js ~ line 79 ~ authController.login= ~ user', user);
     if (!user) {
       return res.status(400).json({ message: 'No account with this email has been registers' });
@@ -88,7 +88,7 @@ authController.login = async (req, res) => {
       token,
       userInfo: {
         id: user._id,
-        username: user.username,
+        name: user.name,
         email: user.email,
         isAdmin: user.isAdmin,
       },

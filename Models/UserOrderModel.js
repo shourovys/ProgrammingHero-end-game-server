@@ -12,7 +12,7 @@ const userOrderSchema = new Schema(
       type: String,
       required: true,
     },
-    username: {
+    name: {
       type: String,
       required: true,
     },
@@ -21,7 +21,7 @@ const userOrderSchema = new Schema(
       default: 'panging',
     },
   },
-  { timestamps: true }
+  { timestamps: true },
 );
 
 const UserOrders = mongoose.model('UserOrders', userOrderSchema);

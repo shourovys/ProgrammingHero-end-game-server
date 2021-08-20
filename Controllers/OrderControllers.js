@@ -22,9 +22,13 @@ OrderController.getAdminOrders = async (req, res) => {
 OrderController.updateOrder = async (req, res) => {
   const { orderId, status } = req.body;
   try {
-    const updated = await UserOrders.findByIdAndUpdate(orderId, status, {
-      new: true,
-    });
+    const updated = await UserOrders.findByIdAndUpdate(
+      orderId,
+      { status },
+      {
+        new: true,
+      },
+    );
     res.send(updated);
   } catch (error) {
     res.status(404).json({ message: error.message });
@@ -39,10 +43,6 @@ OrderController.createOrder = async (req, res) => {
     const newOrder = new UserOrders({ userId, ...req.body });
 
     const saveOrder = await newOrder.save();
-    console.log(
-      '🚀 ~ file: OrderControllers.js ~ line 48 ~ OrderController.createOrder= ~ saveOrder',
-      saveOrder
-    );
 
     res.send(saveOrder);
   } catch (error) {
