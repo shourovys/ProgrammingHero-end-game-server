@@ -5,7 +5,6 @@ const mongoose = require('mongoose');
 const authRouter = require('./Routers/AuthRouter');
 const OrderRouter = require('./Routers/OrderRouter');
 const serviceRouter = require('./Routers/ServiceRouter');
-const UserOrderRouter = require('./Routers/UserOrderRouter');
 
 require('dotenv').config();
 
@@ -18,7 +17,6 @@ app.use(cors());
 // routers
 app.use('/auth', authRouter);
 app.use('/services', serviceRouter);
-app.use('/user/order', UserOrderRouter);
 app.use('/order', OrderRouter);
 app.post('/', (req, res) => res.send(req.body));
 
@@ -27,8 +25,7 @@ const PORT = process.env.PORT || 4000;
 
 mongoose
   .connect(CONNECTION_URL, { useNewUrlParser: true, useUnifiedTopology: true })
-  .then(() =>
-    app.listen(PORT, () => console.log(`Server Running on Port: http://localhost:${PORT}`)),
+  .then(() => app.listen(PORT, () => console.log(`Server Running on Port: http://localhost:${PORT}`)),
   )
   .catch((error) => console.log(`${error} did not connect`));
 

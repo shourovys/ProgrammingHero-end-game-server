@@ -4,8 +4,8 @@ const { Schema } = mongoose;
 
 const userOrderSchema = new Schema(
   {
-    orderServices: {
-      type: [Object],
+    orderService: {
+      type: Object,
       required: true,
     },
     userId: {
@@ -18,11 +18,10 @@ const userOrderSchema = new Schema(
     },
     status: {
       type: String,
-      required: true,
       default: 'panging',
     },
   },
-  { timestamps: true },
+  { timestamps: true }
 );
 
 const UserOrders = mongoose.model('UserOrders', userOrderSchema);
