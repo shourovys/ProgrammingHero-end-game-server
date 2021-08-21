@@ -10,5 +10,4 @@ authRouter.post('/sineUp', sineUp);
 authRouter.post('/login', login);
 
 authRouter.post('/make-admin', auth, admin, makeAdmin);
-
 module.exports = authRouter;
