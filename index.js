@@ -20,7 +20,7 @@ app.use('/services', serviceRouter);
 app.use('/order', OrderRouter);
 app.post('/', (req, res) => res.send(req.body));
 
-const CONNECTION_URL = process.env.MONGODB_CONNECTION_URL_PAST;
+const CONNECTION_URL =  'mongodb+srv://shourov:shourov123@cluster0.nor46.mongodb.net/myFirstDatabase?retryWrites=true&w=majority';
 const PORT = process.env.PORT || 4000;
 
 mongoose
