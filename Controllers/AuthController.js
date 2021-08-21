@@ -4,7 +4,8 @@ const jwt = require('jsonwebtoken');
 const User = require('../Models/UserModel');
 
 // eslint-disable-next-line no-useless-escape
-const reg_exp_for_email =  /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
+const reg_exp_for_email =
+  /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
 
 authController.sineUp = async (req, res) => {
   try {
@@ -40,7 +41,7 @@ authController.sineUp = async (req, res) => {
     const saveUser = await newUser.save();
     console.log(
       '🚀 ~ file: AuthController.js ~ line 43 ~ authController.sineUp= ~ saveUser',
-      saveUser,
+      saveUser
     );
 
     const token = jwt.sign({ id: saveUser._id }, process.env.JWT_PASSWORD);
@@ -73,7 +74,7 @@ authController.login = async (req, res) => {
         message: 'The password need to be at least 6 characters long.',
       });
     }
-    const user = await User.findOne({ email }, { email: 1, password: 1, name: 1, isAdmin: 1 });
+    const user = await User.findOne({ email });
     console.log('🚀 ~ file: AuthController.js ~ line 79 ~ authController.login= ~ user', user);
     if (!user) {
       return res.status(400).json({ message: 'No account with this email has been registers' });
@@ -108,7 +109,7 @@ authController.makeAdmin = async (req, res) => {
       { isAdmin: true },
       {
         new: true,
-      },
+      }
     );
 
     return res.send(updated);
