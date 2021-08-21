@@ -18,14 +18,15 @@ app.use(cors());
 app.use('/auth', authRouter);
 app.use('/services', serviceRouter);
 app.use('/order', OrderRouter);
-app.post('/', (req, res) => res.send(req.body));
+app.get('/', (req, res) => res.send('welcome our app'));
 
-const CONNECTION_URL =  'mongodb+srv://shourov:shourov123@cluster0.nor46.mongodb.net/myFirstDatabase?retryWrites=true&w=majority';
+const CONNECTION_URL = process.env.MONGODB_CONNECTION_URL_PAST;
 const PORT = process.env.PORT || 4000;
 
 mongoose
   .connect(CONNECTION_URL, { useNewUrlParser: true, useUnifiedTopology: true })
-  .then(() => app.listen(PORT, () => console.log(`Server Running on Port: http://localhost:${PORT}`)),
+  .then(() =>
+    app.listen(PORT, () => console.log(`Server Running on Port: http://localhost:${PORT}`)),
   )
   .catch((error) => console.log(`${error} did not connect`));
 
